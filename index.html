@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Humanizer - Transform AI Text into Natural Human Writing</title>
+    <meta name="description" content="Transform AI-generated text into natural, human-like writing with real-time analysis, intelligent humanization, and spell checking.">
+    <meta name="author" content="AI Humanizer">
+    <meta property="og:title" content="AI Humanizer - Transform AI Text into Natural Writing">
+    <meta property="og:description" content="Real-time analysis, intelligent humanization, and spell checking in one powerful tool">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light">
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo" onclick="showPage('home'); return false;">
+                <svg class="icon icon-lg" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                AI Humanizer
+            </a>
+            <div class="nav-links">
+                <a href="#" id="nav-home" class="active" onclick="showPage('home'); return false;">Home</a>
+                <a href="#" id="nav-contact" onclick="showPage('contact'); return false;">Contact</a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <svg class="icon" id="moon-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="icon hidden" id="sun-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home-page">
+        <section class="hero">
+            <div class="container">
+                <div class="badge">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    Powered by Advanced AI Technology
+                </div>
+                <h1>
+                    Transform AI Text into<br>
+                    <span class="highlight">Natural Human Writing</span>
+                </h1>
+                <p class="subtitle">
+                    Real-time analysis, intelligent humanization, and spell checking - all in one powerful tool
+                </p>
+            </div>
+        </section>
+
+        <section class="analyzer-section">
+            <div class="container">
+                <div class="analyzer-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Enter Your Text</h3>
+                            <span class="char-count" id="char-count">0 characters</span>
+                        </div>
+                        <textarea 
+                            id="text-input" 
+                            placeholder="Paste or type your text here for real-time analysis and humanization. Try pasting: 'In conclusion, the efficacy of this paradigm shift necessitates a robust and scalable infrastructure, thereby enabling a synergistic optimization of concurrent processes.'"
+                            oninput="analyzeText()"
+                        ></textarea>
+                        <div class="button-group">
+                            <button class="btn-primary" onclick="humanizeText()" id="humanize-btn" disabled>
+                                <div id="humanize-spinner" class="hidden spinner"></div>
+                                <span id="humanize-icon">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                                    </svg>
+                                </span>
+                                <span id="humanize-text">Humanize Text</span>
+                            </button>
+                            <button class="btn-outline" onclick="checkSpelling()" id="spellcheck-btn" disabled>
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Check Spelling
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Real-Time Analysis</h3>
+                        
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span class="progress-label">Human Score</span>
+                                <span class="progress-value" id="human-score">50%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="human-progress" style="width: 50%; background: var(--success);"></div>
+                            </div>
+                            <p class="progress-description">
+                                Higher score indicates more natural, variable, human-like writing.
+                            </p>
+                        </div>
+
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span class="progress-label">AI Score</span>
+                                <span class="progress-value" id="ai-score">50%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="ai-progress" style="width: 50%; background: var(--destructive);"></div>
+                            </div>
+                            <p class="progress-description">
+                                Detects patterns typical of AI-generated text (predictability, uniform complexity).
+                            </p>
+                        </div>
+
+                        <div class="status-card" id="status-card">
+                            <div class="status-header">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="16" x2="12" y2="12"/>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                </svg>
+                                <span id="status-label">Awaiting Input</span>
+                            </div>
+                            <p id="status-description" style="font-size: 0.875rem; color: var(--text-secondary);">
+                                Start typing or paste your text above to begin the analysis.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.75rem;">Quick Tips:</h4>
+                            <ul class="tips-list">
+                                <li><span style="color: var(--primary);">•</span> Use **contractions** (don't, can't)</li>
+                                <li><span style="color: var(--primary);">•</span> Vary **sentence length** and structure</li>
+                                <li><span style="color: var(--primary);">•</span> Add personal touches or **colloquialisms**</li>
+                                <li><span style="color: var(--primary);">•</span> Break up complex sentences into simpler ones</li>
+                                <li><span style="color: var(--primary);">•</span> Avoid repetitive patterns and transition phrases</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div>
+                        <div class="stat-value">50,000+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">1M+</div>
+                        <div class="stat-label">Texts Humanized</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose Our AI Humanizer?</h2>
+                    <p class="subtitle">Powerful features designed to make your content more authentic and engaging</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Real-Time Analysis</h3>
+                        <p class="feature-description">
+                            Instant feedback on your text with live human vs AI percentage tracking as you type.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">100% Private</h3>
+                        <p class="feature-description">
+                            All processing happens in your browser. Your content never leaves your device.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4"/>
+                                <polyline points="17 11 19 13 23 9"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">No Sign-Up Required</h3>
+                        <p class="feature-description">
+                            Start using immediately without creating an account or providing personal information.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="analyzer-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="subtitle">Three simple steps to transform your content</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Paste Your Text</h3>
+                        <p class="feature-description">
+                            Copy and paste your AI-generated content into the text area. Our tool instantly begins analyzing it.
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Analyze & Review</h3>
+                        <p class="feature-description">
+                            Watch the real-time analysis showing human vs AI percentages. Identify areas that need improvement.
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="feature-icon">
+                            <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Humanize & Finalize</h3>
+                        <p class="feature-description">
+                            Click 'Humanize' to transform your text, making it undetectable to common AI detectors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-box">
+                    <h2 class="cta-title">Ready to Make Your Text Sound Human?</h2>
+                    <p class="cta-description">
+                        Join thousands of students and professionals who are making their content authentic and impactful.
+                    </p>
+                    <a href="#" class="cta-button" onclick="document.getElementById('text-input').focus(); return false;">
+                        Start Humanizing Now
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="contact-page" class="hidden">
+        <section class="contact-page">
+            <div class="container">
+                <div class="section-header" style="text-align: left;">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <p class="subtitle" style="text-align: left; max-width: none; margin: 0;">We're here to help with any questions or feedback you have.</p>
+                </div>
+                <div class="contact-grid">
+                    <div class="card">
+                        <form id="contact-form" onsubmit="handleContactForm(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;">
+                                Send Message
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title" style="margin-bottom: 1.5rem;">Contact Information</h3>
+                        <div class="contact-info">
+                            <div class="contact-info-item">
+                                <div class="info-icon">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">Address</div>
+                                    <div class="text-secondary" style="font-size: 0.875rem;">123 Human Lane, Tech City, 90210</div>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <div class="info-icon">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">Email</div>
+                                    <a href="mailto:support@aihumanizer.com" style="text-decoration: none; color: var(--primary); font-size: 0.875rem;">support@aihumanizer.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="card-title" style="margin-top: 2rem; margin-bottom: 1.5rem;">Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <path d="M16 8a6 6 0 0 0-6 6v7H6v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                            </a>
+                            <a href="#" class="social-link" aria-label="GitHub">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.4 5.4 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.5a5.32 5.32 0 0 0-6 0C7.27.65 6.09 1 6.09 1A5.07 5.07 0 0 0 6 4.77a5.4 5.4 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 13 18.13V22"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
